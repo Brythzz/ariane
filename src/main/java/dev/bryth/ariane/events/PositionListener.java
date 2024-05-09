@@ -2,6 +2,7 @@ package dev.bryth.ariane.events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
@@ -14,6 +15,14 @@ public class PositionListener {
     @SubscribeEvent
     public void playerLoggedOut(final FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
         LinesRenderer.isTracking = false;
+        LinesRenderer.pos = new ArrayList<>();
+    }
+
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (event.entity != player) return;
+
         LinesRenderer.pos = new ArrayList<>();
     }
 
